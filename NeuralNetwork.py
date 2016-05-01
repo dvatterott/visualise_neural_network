@@ -47,15 +47,17 @@ class Layer():
         else:
             return None
 
-    def __line_between_two_neurons(self, neuron1, neuron2, weight=[]):
+    def __line_between_two_neurons(self, neuron1, neuron2,weight=[]):
         angle = atan((neuron2.x - neuron1.x) / float(neuron2.y - neuron1.y))
         x_adjustment = neuron_radius * sin(angle)
         y_adjustment = neuron_radius * cos(angle)
         line = plt.Line2D((neuron1.x - x_adjustment, neuron2.x + x_adjustment), (neuron1.y - y_adjustment, neuron2.y + y_adjustment),color='k')
         plt.gca().add_line(line)
         if weight: 
-            if neuron1.x < 8: text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight,size='large',ha='right')
-            if neuron1.x > 8: text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight,size='large',ha='left')
+            if neuron1.x < 8: 
+                text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight[0],size='large',ha='right')
+            if neuron1.x > 8:
+                text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight[1],size='large',ha='left')
             if neuron1.x == 8: text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight,size='large',ha='center')
             
     def draw(self,text):
@@ -68,7 +70,7 @@ class Layer():
                     elif np.size(previous_layer_neuron.weight) < 2:
                         self.__line_between_two_neurons(neuron, previous_layer_neuron, weight=previous_layer_neuron.weight)
                     else:
-                        self.__line_between_two_neurons(neuron, previous_layer_neuron, weight=previous_layer_neuron.weight[i])
+                        self.__line_between_two_neurons(neuron, previous_layer_neuron, weight=previous_layer_neuron.weight)
                         
                         
 class NeuralNetwork():
