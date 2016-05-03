@@ -54,11 +54,18 @@ class Layer():
         line = plt.Line2D((neuron1.x - x_adjustment, neuron2.x + x_adjustment), (neuron1.y - y_adjustment, neuron2.y + y_adjustment),color='k')
         plt.gca().add_line(line)
         if weight: 
-            if neuron1.x < 8: 
+            if neuron1.x < 8 and neuron1.x != neuron2.x: 
+                text = plt.text((neuron1.x+neuron2.x)/2.5,(neuron1.y+neuron2.y)/4,weight[0],size='large',ha='center')
+            elif neuron1.x > 8 and neuron1.x != neuron2.x:
+                text = plt.text((neuron1.x+neuron2.x)/1.7,(neuron1.y+neuron2.y)/4,weight[1],size='large',ha='center')
+            elif neuron2.x < 8 and neuron1.x == neuron2.x: 
                 text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight[0],size='large',ha='right')
-            if neuron1.x > 8:
+            elif neuron2.x > 8 and neuron1.x == neuron2.x:
                 text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight[1],size='large',ha='left')
-            if neuron1.x == 8: text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight,size='large',ha='center')
+            elif neuron2.x < 8:
+                text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight,size='large',ha='right')
+            elif neuron2.x > 8:
+                text = plt.text((neuron1.x+neuron2.x)/2,(neuron1.y+neuron2.y)/2,weight,size='large',ha='left')
             
     def draw(self,text):
         for neuron,texter in zip(self.neurons,text):
